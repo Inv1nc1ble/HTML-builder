@@ -1,7 +1,7 @@
 /* eslint-disable no-inner-declarations */
 const path = require('path');
 const fs = require('fs');
-const { readdir, mkdir, copyFile, rmdir, readFile } = require('fs').promises;
+const { readdir, mkdir, copyFile, rm, readFile } = require('fs').promises;
 const mergeStyles = require('../05-merge-styles');
 
 const pathIn = path.join(__dirname, 'project-dist');
@@ -9,7 +9,7 @@ const pathIn = path.join(__dirname, 'project-dist');
 
 async function mySuperScript(pathWhere) {
   // delete folder
-  await rmdir(pathWhere, {recursive: true, force: true});
+  await rm(pathWhere, {recursive: true, force: true});
 
   // folder created
   await mkdir(pathWhere, {recursive: true});

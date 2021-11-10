@@ -1,11 +1,13 @@
 const path = require('path');
-const { readdir, copyFile, mkdir } = require('fs').promises;
+const { readdir, copyFile, mkdir, rm } = require('fs').promises;
 
 
 const pathIn = path.join(__dirname, 'files-copy');
 const pathOut = path.join(__dirname, 'files');
-mkdir(pathIn, {recursive: true});
+
+
 async function copyDir(pathWhere, pathFrom) {
+  await delDir(pathWhere);
   
   try {
     const files = await readdir(pathFrom, {withFileTypes: true});
@@ -20,6 +22,13 @@ async function copyDir(pathWhere, pathFrom) {
     console.error(err);
   }
 }
+
+async function delDir(dir) {
+  await rm(dir, {recursive: true, force: true});
+  await mkdir(pathIn, {recursive: true});
+}
+
+
 copyDir(pathIn, pathOut);
 
 module.exports = copyDir;
